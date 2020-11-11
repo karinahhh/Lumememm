@@ -11,11 +11,23 @@ namespace Lumememm
 {
     public partial class MainPage : ContentPage
     {
-        Frame f, f1, f2, f3;
+        Frame f1, f2, f3;
         Button btn1, btn2, btn3, btnrnd;
+        Stepper step;
         public MainPage()
         {
             BackgroundColor = Color.LightBlue;
+
+            step = new Stepper
+            {
+
+                Minimum = 0,
+                Maximum = 50,
+                Increment = 5
+            };
+
+			step.ValueChanged += Step_ValueChanged;
+
 
 
             f1 = new Frame();
@@ -26,8 +38,8 @@ namespace Lumememm
             f1.Padding = 30;
             f1.HorizontalOptions = LayoutOptions.Center;
             f1.Opacity = 1;
-            f2 = new Frame();
 
+            f2 = new Frame();
             f2.HeightRequest = 20;
             f2.WidthRequest = 20;
             f2.BackgroundColor = Color.White;
@@ -74,10 +86,18 @@ namespace Lumememm
             btn3.Clicked += Btn3_Clicked;
             btnrnd.Clicked += Btnrnd_Clicked;
 
-            Content = new StackLayout { Children = { f1, f2, f3,btn1,btn2,btn3,btnrnd} };
+            Content = new StackLayout { Children = { f1, f2, f3,btn1,btn2,btn3,btnrnd,step} };
         }
 
-        private void Btnrnd_Clicked(object sender, EventArgs e)
+		private void Step_ValueChanged(object sender, ValueChangedEventArgs e)
+		{
+            f1.Padding = step.Value;
+            f2.Padding = step.Value;
+            f3.Padding = step.Value;
+        }
+
+
+		private void Btnrnd_Clicked(object sender, EventArgs e)
         {
             Random rnd = new Random();
             int r = rnd.Next(256);
